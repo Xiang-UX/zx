@@ -1,264 +1,486 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
 
-    <title>22级应用化工技术课表</title>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
+<head>
+  <meta charset="UTF-8" />
+
+  <title>22级应用化工技术课表</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    table {
+      width: 1200px;
+      height: 500px;
+      text-align: center;
+    }
+
+    p {
+      text-align: center;
+    }
+
+    div {
+      text-align: center;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: serif;
+    }
+
+    em {
+      color: #25d0e6;
+    }
+
+    .hh {
+      background: #c5f15e;
+    }
+
+    /* 第一行样式 */
+    .one {
+      width: 20px;
+    }
+
+    /* 左上空白 */
+    .k {
+      background: #ffffff;
+    }
+
+    /* 第二列样式 */
+    .jk {
+      background: #c39b9b;
+    }
+
+    /* 星期样式 */
+    .xq {
+      background: #d9e00f;
+    }
+
+    /* 课程样式 */
+    .nr {
+      background: #27f8d5;
+      font-family: monospace;
+    }
+
+    /*  */
+    .sw {
+      background: #e0cece;
+    }
+
+    /*  */
+    .xw {
+      background: #d78f8f;
+    }
+
+    /*  */
+    .ws {
+      background: #cbb6b6;
+    }
+
+    h5 {
+      text-align: center;
+      font-family: monospace;
+      font-weight: lighter;
+    }
+
+    a {
+      text-decoration: none;
+      color: #f40000;
+    }
+
+    /* 按钮样式 */
+    /* button {
+      padding: 15px 30px;
+      font-size: 18px;
+      outline: none;
+      border: none;
+      border-radius: 10px;
+      -webkit-transition: 0.5s;
+      transition: 0.5s;
+      background: #1e1e1e;
+      color: greenyellow;
+      -webkit-box-shadow: 0 0 10px #363636, inset 0 0 10px #363636;
+      box-shadow: 0 0 10px #363636, inset 0 0 10px #363636;
+    }
+
+    button:hover {
+      -webkit-animation: a 0.5s 1 linear;
+      animation: a 0.5s 1 linear;
+    }
+
+    @-webkit-keyframes a {
+      0% {
+        -webkit-transform: scale(0.7, 1.3);
+        transform: scale(0.7, 1.3);
       }
 
-      table {
-        width: 1200px;
-        height: 500px;
-        text-align: center;
+      25% {
+        -webkit-transform: scale(1.3, 0.7);
+        transform: scale(1.3, 0.7);
       }
-      p {
-        text-align: center;
+
+      50% {
+        -webkit-transform: scale(0.7, 1.3);
+        transform: scale(0.7, 1.3);
       }
-      div {
-        text-align: center;
+
+      75% {
+        -webkit-transform: scale(1.3, 0.7);
+        transform: scale(1.3, 0.7);
       }
-      h1 {
-        text-align: center;
-        font-family: serif;
+
+      100% {
+        -webkit-transform: scale(1, 1);
+        transform: scale(1, 1);
       }
-      em {
-        color: #25d0e6;
+    }
+
+    @keyframes a {
+      0% {
+        -webkit-transform: scale(0.7, 1.3);
+        transform: scale(0.7, 1.3);
       }
-      .hh {
-        background: #c5f15e;
+
+      25% {
+        -webkit-transform: scale(1.3, 0.7);
+        transform: scale(1.3, 0.7);
       }
-      /* 第一行样式 */
-      .one {
-        width: 20px;
+
+      50% {
+        -webkit-transform: scale(0.7, 1.3);
+        transform: scale(0.7, 1.3);
       }
-      /* 左上空白 */
-      .k {
-        background: #ffffff;
+
+      75% {
+        -webkit-transform: scale(1.3, 0.7);
+        transform: scale(1.3, 0.7);
       }
-      /* 第二列样式 */
-      .jk {
-        background: #c39b9b;
+
+      100% {
+        -webkit-transform: scale(1, 1);
+        transform: scale(1, 1);
       }
-      /* 星期样式 */
-      .xq {
-        background: #d9e00f;
+    } */
+    /* 加载中  */
+    .spinner {
+      width: 44px;
+      height: 44px;
+      -webkit-animation: spinner-y0fdc1 2s infinite ease;
+      animation: spinner-y0fdc1 2s infinite ease;
+      -webkit-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+    }
+
+    .spinner>div {
+      background-color: rgba(0, 77, 255, 0.2);
+      height: 100%;
+      position: absolute;
+      width: 100%;
+      border: 2px solid #004dff;
+    }
+
+    .spinner div:nth-of-type(1) {
+      -webkit-transform: translateZ(-22px) rotateY(180deg);
+      transform: translateZ(-22px) rotateY(180deg);
+    }
+
+    .spinner div:nth-of-type(2) {
+      -webkit-transform: rotateY(-270deg) translateX(50%);
+      transform: rotateY(-270deg) translateX(50%);
+      -webkit-transform-origin: top right;
+      -ms-transform-origin: top right;
+      transform-origin: top right;
+    }
+
+    .spinner div:nth-of-type(3) {
+      -webkit-transform: rotateY(270deg) translateX(-50%);
+      transform: rotateY(270deg) translateX(-50%);
+      -webkit-transform-origin: center left;
+      -ms-transform-origin: center left;
+      transform-origin: center left;
+    }
+
+    .spinner div:nth-of-type(4) {
+      -webkit-transform: rotateX(90deg) translateY(-50%);
+      transform: rotateX(90deg) translateY(-50%);
+      -webkit-transform-origin: top center;
+      -ms-transform-origin: top center;
+      transform-origin: top center;
+    }
+
+    .spinner div:nth-of-type(5) {
+      -webkit-transform: rotateX(-90deg) translateY(50%);
+      transform: rotateX(-90deg) translateY(50%);
+      -webkit-transform-origin: bottom center;
+      -ms-transform-origin: bottom center;
+      transform-origin: bottom center;
+    }
+
+    .spinner div:nth-of-type(6) {
+      -webkit-transform: translateZ(22px);
+      transform: translateZ(22px);
+    }
+
+    @-webkit-keyframes spinner-y0fdc1 {
+      0% {
+        -webkit-transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
+        transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
       }
-      /* 课程样式 */
-      .nr {
-        background: #27f8d5;
-        font-family: monospace;
+
+      50% {
+        -webkit-transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
+        transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
       }
-      /*  */
-      .sw {
-        background: #e0cece;
+
+      100% {
+        -webkit-transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
+        transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
       }
-      /*  */
-      .xw {
-        background: #d78f8f;
+    }
+
+    @keyframes spinner-y0fdc1 {
+      0% {
+        -webkit-transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
+        transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
       }
-      /*  */
-      .ws {
-        background: #cbb6b6;
+
+      50% {
+        -webkit-transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
+        transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
       }
-      h5 {
-        text-align: center;
-        font-family: monospace;
-        font-weight: lighter;
+
+      100% {
+        -webkit-transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
+        transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
       }
-      a {
-        text-decoration: none;
-        color: #f40000;
-      }
-    </style>
-  </head>
-  <body>
-    <table align="center">
-      <tr>
-        <!-- 第几周 -->
-        <h1>应用化工技术 <em>第 三 周</em> 课表</h1>
-        <h5>
-          <a href="http://www.jzlg.cn/" target="_blank">学校官网主页</a> /
-          <a href="http://218.200.73.44/st/login.aspx" target="_blank"
-            >学生登录平台</a
-          >
-          >
-        </h5>
-        <div id="times"></div>
+    }
+  </style>
+</head>
+
+<body>
+  <table align="center">
+    <tr>
+      <!-- 第几周 -->
+      <h1>应用化工技术<em>第 四 周</em>课表</h1>
+      <!-- 加载 -->
+      <center>
+        <div class="spinner">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </center>
+      <h5>
+
+
+        <a href="http://www.jzlg.cn/" target="_blank">学校官网主页</a> /
+        <a href="http://218.200.73.44/st/login.aspx" target="_blank">学生登录平台</a>
+        >
+      </h5>
+      <div id="times"></div>
+      <script>
+        var times = document.getElementById("times");
+        function sz() {
+          t = setInterval(function () {
+            //获取时间对象
+            var dd = new Date();
+            //获取年月日，时分秒
+            var y = dd.getFullYear();
+            var m = dd.getMonth() + 1;
+            var d = dd.getDate();
+            var h = dd.getHours();
+            var i = dd.getMinutes();
+            var s = dd.getSeconds();
+            var wkday = dd.getDay();
+            times.innerHTML =
+              y +
+              "年" +
+              m +
+              "月" +
+              d +
+              "日" +
+              "   " +
+              h +
+              ":" +
+              i +
+              ":" +
+              s +
+              " " +
+              "星期" +
+              "日一二三四五六".charAt(wkday);
+          }, 1000);
+        }
+        sz();
+      </script>
+    </tr>
+    <tr class="one">
+      <td class="k">
         <script>
-          var times = document.getElementById("times");
-          function sz() {
-            t = setInterval(function () {
-              //获取时间对象
-              var dd = new Date();
-              //获取年月日，时分秒
-              var y = dd.getFullYear();
-              var m = dd.getMonth() + 1;
-              var d = dd.getDate();
-              var h = dd.getHours();
-              var i = dd.getMinutes();
-              var s = dd.getSeconds();
-              var wkday = dd.getDay();
-              times.innerHTML =
-                y +
-                "年" +
-                m +
-                "月" +
-                d +
-                "日" +
-                "   " +
-                h +
-                ":" +
-                i +
-                ":" +
-                s +
-                " " +
-                "星期" +
-                "日一二三四五六".charAt(wkday);
-            }, 1000);
+          function dd() {
+            window.alert('点击后其实也没啥');
+            window.alert('真的没啥');
+            window.alert('说了你咋不信呢');
+            window.alert('没啥想说的');
+            window.alert('就是想说zx真帅');
+            window.alert('好好学习天天向上');
+
           }
-          sz();
         </script>
-      </tr>
-      <tr class="one">
-        <td class="k">
-          <input type="button" value="时间" onclick="test()" />
-        </td>
-        <td class="hh">节课 / 星期</td>
-        <td class="xq">星期一</td>
-        <td class="xq">星期二</td>
-        <td class="xq">星期三</td>
-        <td class="xq">星期四</td>
-        <td class="xq">星期五</td>
-        <td class="xq">星期六</td>
-        <td class="xq">星期天</td>
-      </tr>
+        <!-- <button onclick="dd()">按钮</button> -->
 
-      <tr>
-        <!-- 上午一二节课 -->
-        <td class="sw">上</td>
-        <td class="jk">1-2</td>
-        <!-- 星期一 -->
-        <td class="nr" id="Monday-1"></td>
-        <!-- 星期二 -->
-        <td class="nr" id="Tuesday-1">数学<br />(道之楼(科教大楼)<br />506</td>
-        <!-- 星期三 -->
-        <td class="nr" id="Wednesday-1">
-          计算机<br />(德之楼(北一楼)<br />505
-        </td>
-        <!-- 星期四 -->
-        <td class="nr" id="Thursday-1">
-          分析化学<br />(道之楼(科教大楼)<br />501
-        </td>
-        <!-- 星期五 -->
-        <td class="nr" id="Friday-1"></td>
-        <!-- 星期六 -->
-        <td class="nr" id="Saturday-1"></td>
-        <!-- 星期天 -->
-        <td class="nr" id="Sunday-1"></td>
-      </tr>
+      </td>
+      <td class="hh">节课 / 星期</td>
+      <td class="xq">星期一</td>
+      <td class="xq">星期二</td>
+      <td class="xq">星期三</td>
+      <td class="xq">星期四</td>
+      <td class="xq">星期五</td>
+      <td class="xq">星期六</td>
+      <td class="xq">星期天</td>
+    </tr>
 
-      <tr>
-        <!-- 上午三四节课 -->
-        <td class="sw">午</td>
-        <td class="jk">3-4</td>
-        <!-- 星期一 -->
-        <td class="nr" id="Monday-2"></td>
-        <!-- 星期二 -->
-        <td class="nr" id="Tuesday-2">
-          有机化学<br />(道之楼(科教大楼)<br />501
-        </td>
-        <!-- 星期三 -->
-        <td class="nr" id="Wednesday-2">
-          计算机<br />(德之楼(北一楼)<br />505
-        </td>
-        <!-- 星期四 -->
-        <td class="nr" id="">英语<br />(道之楼(科教大楼)<br />506</td>
-        <!-- 星期五 -->
-        <td class="nr" id="Friday-2">体育<br />(篮球场)</td>
-        <!-- 星期六 -->
-        <td class="nr" id="Saturday-2"></td>
-        <!-- 星期天 -->
-        <td class="nr" id="Sunday-2"></td>
-      </tr>
+    <tr>
+      <!-- 上午一二节课 -->
+      <td class="sw">上</td>
+      <td class="jk">1-2</td>
+      <!-- 星期一 -->
+      <td class="nr" id="Monday_1"></td>
+      <!-- 星期二 -->
+      <td class="nr" id="Tuesday_1">数学<br />(道之楼(科教大楼)<br />506</td>
+      <!-- 星期三 -->
+      <td class="nr" id="Wednesday_1">
 
-      <tr>
-        <!-- 下午五六节课 -->
-        <td class="xw">下</td>
-        <td class="jk">5-6</td>
-        <!-- 星期一 -->
-        <td class="nr" id="Monday-3">
-          心理健康教育<br />(道之楼(科教大楼)<br />307
-        </td>
-        <!-- 星期二 -->
-        <td class="nr" id="Tuesday-3"></td>
-        <!-- 星期三 -->
-        <td class="nr" id="Wednesday-3">英语<br />(道之楼(科 教楼)<br />506</td>
-        <!-- 星期四 -->
-        <td class="nr" id="Thursday-3"></td>
-        <!-- 星期五 -->
-        <td class="nr" id="Friday-3"></td>
-        <!-- 星期六 -->
-        <td class="nr" id="Saturday-"></td>
-        <!-- 星期天 -->
-        <td class="nr" id="Sunday-"></td>
-      </tr>
+      </td>
+      <!-- 星期四 -->
+      <td class="nr" id="Thursday_1">
+        分析化学<br />(道之楼(科教大楼)<br />501
+      </td>
+      <!-- 星期五 -->
+      <td class="nr" id="Friday_1"></td>
+      <!-- 星期六 -->
+      <td class="nr" id="Saturday_1"></td>
+      <!-- 星期天 -->
+      <td class="nr" id="Sunday_1"></td>
+    </tr>
 
-      <tr>
-        <!-- 下午七八节课 -->
-        <td class="xw">午</td>
-        <td class="jk">7-8</td>
-        <!-- 星期一 -->
-        <td class="nr" id="Monday-4">
-          分析化学<br />(道之楼(科教大楼)<br />501
-        </td>
-        <!-- 星期二 -->
-        <td class="nr" id="Tuesday-4"></td>
-        <!-- 星期三 -->
-        <td class="nr" id="Wednesday-4">
-          数学<br />(道之楼(科教大楼)<br />506
-        </td>
-        <!-- 星期四 -->
-        <td class="nr" id="Thursday-4">
-          化工制图<br />(道之楼(科教大楼)<br />503
-        </td>
-        <!-- 星期五 -->
-        <td class="nr" id="Friday-4">
-          初等劳动教育<br />(德之楼(北一楼)<br />502
-        </td>
-        <!-- 星期六 -->
-        <td class="nr" id="Saturday-4"></td>
-        <!-- 星期天 -->
-        <td class="nr" id="Sunday-4"></td>
-      </tr>
+    <tr>
+      <!-- 上午三四节课 -->
+      <td class="sw">午</td>
+      <td class="jk">3-4</td>
+      <!-- 星期一 -->
+      <td class="nr" id="Monday_2">
 
-      <tr>
-        <!-- 晚自习 -->
-        <td class="ws">晚上</td>
-        <td class="jk">9-10</td>
-        <!-- 星期一 -->
-        <td class="nr" id="Monday-5">
-          毛泽东思想概念<br />(道之楼(科教大楼)<br />506
-        </td>
-        <!-- 星期二 -->
-        <td class="nr" id="Tuesday-5"></td>
-        <!-- 星期三 -->
-        <td class="nr" id="Wednesday-5"></td>
-        <!-- 星期四 -->
-        <td class="nr" id="Thursday-5">
-          毛泽东思想概念<br />(道之楼(科教大楼)<br />506
-        </td>
-        <!-- 星期五 -->
-        <td class="nr" id="Friday-5"></td>
-        <!-- 星期六 -->
-        <td class="nr" id="Saturday-5"></td>
-        <!-- 星期天 -->
-        <td class="nr" id="Sunday-5"></td>
-      </tr>
-    </table>
-    <h5>一般星期天早上可以看下周课表</h5>
-  </body>
+      </td>
+      <!-- 星期二 -->
+      <td class="nr" id="Tuesday_2">
+        有机化学<br />(道之楼(科教大楼)<br />501
+      </td>
+      <!-- 星期三 -->
+      <td class="nr" id="Wednesday_2">
+
+      </td>
+      <!-- 星期四 -->
+      <td class="nr" id="">英语<br />(道之楼(科教大楼)<br />506</td>
+      <!-- 星期五 -->
+      <td class="nr" id="Friday_2">体育<br />(篮球场)</td>
+      <!-- 星期六 -->
+      <td class="nr" id="Saturday_2"></td>
+      <!-- 星期天 -->
+      <td class="nr" id="Sunday_2"></td>
+    </tr>
+
+    <tr>
+      <!-- 下午五六节课 -->
+      <td class="xw">下</td>
+      <td class="jk">5-6</td>
+      <!-- 星期一 -->
+      <td class="nr" id="Monday_3">
+        心理健康教育<br />(道之楼(科教大楼)<br />307
+      </td>
+      <!-- 星期二 -->
+      <td class="nr" id="Tuesday_3">
+
+      </td>
+      <!-- 星期三 -->
+      <td class="nr" id="Wednesday_3">
+
+      </td>
+      <!-- 星期四 -->
+      <td class="nr" id="Thursday_3">
+
+      </td>
+      <!-- 星期五 -->
+      <td class="nr" id="Friday_3">
+
+      </td>
+      <!-- 星期六 -->
+      <td class="nr" id="Saturday_3">
+
+      </td>
+      <!-- 星期天 -->
+      <td class="nr" id="Sunday_3">
+
+      </td>
+    </tr>
+
+    <tr>
+      <!-- 下午七八节课 -->
+      <td class="xw">午</td>
+      <td class="jk">7-8</td>
+      <!-- 星期一 -->
+      <td class="nr" id="Monday_4">
+        分析化学<br />(道之楼(科教大楼)<br />501
+      </td>
+      <!-- 星期二 -->
+      <td class="nr" id="Tuesday_4"></td>
+      <!-- 星期三 -->
+      <td class="nr" id="Wednesday_4">
+        有机化学<br />(道之楼(科教大楼)<br />501
+      </td>
+      <!-- 星期四 -->
+      <td class="nr" id="Thursday_4">
+        化工制图<br />(道之楼(科教大楼)<br />503
+      </td>
+      <!-- 星期五 -->
+      <td class="nr" id="Friday_4">
+        初等劳动教育<br />(德之楼(北一楼)<br />502
+      </td>
+      <!-- 星期六 -->
+      <td class="nr" id="Saturday_4"></td>
+      <!-- 星期天 -->
+      <td class="nr" id="Sunday_4"></td>
+    </tr>
+
+    <tr>
+      <!-- 晚自习 -->
+      <td class="ws">晚上</td>
+      <td class="jk">9-10</td>
+      <!-- 星期一 -->
+      <td class="nr" id="Monday_5">
+        毛泽东思想概念<br />(道之楼(科教大楼)<br />506
+      </td>
+      <!-- 星期二 -->
+      <td class="nr" id="Tuesday_5"></td>
+      <!-- 星期三 -->
+      <td class="nr" id="Wednesday_5"></td>
+      <!-- 星期四 -->
+      <td class="nr" id="Thursday_5">
+        毛泽东思想概念<br />(道之楼(科教大楼)<br />506
+      </td>
+      <!-- 星期五 -->
+      <td class="nr" id="Friday_5"></td>
+      <!-- 星期六 -->
+      <td class="nr" id="Saturday_5"></td>
+      <!-- 星期天 -->
+      <td class="nr" id="Sunday_5"></td>
+    </tr>
+  </table>
+  <h5>一般星期天早上可以看下周课表</h5>
+</body>
+
 </html>
