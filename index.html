@@ -90,21 +90,99 @@
             text-decoration: none;
             color: #f40000;
         }
+
+        /* 设置弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            color: #0329a7;
+            top: 0;
+            width: 100%;
+            height: 95%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* 弹窗图片样式 */
+        .modal-img {
+            display: block;
+            margin: auto;
+            max-width: 80%;
+            max-height: 70%;
+            padding: 20px;
+        }
+
+        /* 关闭按钮样式 */
+        .close {
+            position: absolute;
+            bottom: 1%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 50px;
+        }
+
+        .close_img {
+            width: 50px;
+            height: 50px;
+
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+
+            text-decoration: none;
+        }
+
+        .yiyan_text {
+            text-align: right;
+        }
+
+        #yiyan_text,
+        .yiyan_text {
+            font-size: small;
+        }
     </style>
 </head>
 
 <body>
+    <!-- 弹窗  -->
+    <div id="myModal" class="modal">
+        <span id="closeBtn" class="close"><img class="close_img"
+                src="https://xiang.4everland.app/img/tuichu.png"></span>
+        <img class="modal-img" src="https://xiang.4everland.app/img/yby.jpg">
+    </div>
+    <script>
+        window.onload = function () {
+            // 显示弹窗
+            document.getElementById("myModal").style.display = "block";
+        };
+        // 当用户点击关闭按钮时，隐藏弹窗
+        document.getElementById("closeBtn").addEventListener("click", function () {
+            document.getElementById("myModal").style.display = "none";
+        });
+    </script>
+
+
+
+
+
+
     <table align="center">
         <tr>
             <!-- 第几周 -->
-            <h1>应用化工技术<em>第 十四 周</em>课表</h1>
+            <h1>应用化工技术<em>第 十五 周</em>课表</h1>
             <!-- 加载 -->
 
             <h5>
                 <a href="http://www.jzlg.cn/" target="_blank">学校官网主页</a> /
                 <a href="http://218.200.73.44/st/login.aspx" target="_blank">学生登录平台</a> /
-                <a href="download.html" target="_blank">下载</a>
-
+                <a href="https://xiang.4everland.app/" target="_blank">主页</a>
             </h5>
             <div id="times"></div>
             <script>
@@ -166,11 +244,11 @@
             </td>
             <!-- 星期二 -->
             <td class="nr" id="Tuesday_1">
-                <!-- 数学<br />道之楼(科教大楼)<br />506 -->
+                数学<br />道之楼(科教大楼)<br />504
             </td>
             <!-- 星期三 -->
             <td class="nr" id="Wednesday_1">
-
+                有机化学 <br> 德之楼(北一楼)<br>502
             </td>
             <!-- 星期四 -->
             <td class="nr" id="Thursday_1">
@@ -203,15 +281,15 @@
             <!-- 星期二 -->
             <td class="nr" id="Tuesday_2">
 
-                有机化学<br />道之楼(科教大楼)<br />503
+
             </td>
             <!-- 星期三 -->
             <td class="nr" id="Wednesday_2">
-
+                有机化学 <br> 德之楼(北一楼)<br>502
             </td>
             <!-- 星期四 -->
             <td class="nr" id="">
-                化工制图 <br> 道之楼(科教大楼) <br> 502
+                化工制图 <br> 道之楼(科教大楼) <br> 301
             </td>
             <!-- 星期五 -->
             <td class="nr" id="Friday_2">体育<br />(篮球场)</td>
@@ -239,7 +317,7 @@
             </td>
             <!-- 星期三 -->
             <td class="nr" id="Wednesday_3">
-
+                英语 <br> 道之楼(科教大楼) <br> 506
             </td>
             <!-- 星期四 -->
             <td class="nr" id="Thursday_3">
@@ -275,7 +353,7 @@
             <!-- 星期三 -->
             <td class="nr" id="Wednesday_4">
 
-                有机化学<br />道之楼(科教大楼)<br />502
+
             </td>
             <!-- 星期四 -->
             <td class="nr" id="Thursday_4">
@@ -299,7 +377,7 @@
             <td class="jk">9-10</td>
             <!-- 星期一 -->
             <td class="nr" id="Monday_5">
-                形势政策2<br />道之楼(科教大楼)<br />506
+
             </td>
             <!-- 星期二 -->
             <td class="nr" id="Tuesday_5">
@@ -311,7 +389,7 @@
             </td>
             <!-- 星期四 -->
             <td class="nr" id="Thursday_5">
-                形势政策2<br />道之楼(科教大楼)<br />506
+
             </td>
             <!-- 星期五 -->
             <td class="nr" id="Friday_5"></td>
@@ -324,3 +402,4 @@
 
 </body>
 
+</html>
