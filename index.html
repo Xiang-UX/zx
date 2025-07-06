@@ -1,405 +1,1213 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
+<html lang="zh-CN">
+  <head>
     <meta charset="UTF-8" />
-    <link rel="shortcut icon" href="https://xiang.4everland.app/img/logo.ico" />
-    <title>22级应用化工技术课表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>在岗人员管理系统 - 金华申通</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
-        body {
-            margin: 0;
-            padding: 0;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #1a2a6c, #0f1c3d);
+        min-height: 100vh;
+        padding: 20px;
+        color: #fff;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        padding: 30px 0;
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        font-size: 2.8rem;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(to right, #ffd700, #f9d423);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        position: relative;
+      }
+
+      h1::after {
+        content: "q";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(to right, #ffd700, #f9d423);
+        border-radius: 2px;
+      }
+
+      .manager-info {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 18px;
+        margin: 20px auto;
+        max-width: 320px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      }
+
+      .manager-info h3 {
+        margin-bottom: 12px;
+        color: #ffd700;
+        font-size: 1.3rem;
+      }
+
+      .manager-name {
+        font-size: 1.7rem;
+        font-weight: bold;
+        color: #4ecdc4;
+        text-shadow: 0 0 8px rgba(78, 205, 196, 0.5);
+      }
+
+      .shift-tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+        gap: 20px;
+      }
+
+      .shift-tab {
+        padding: 16px 45px;
+        font-size: 1.25rem;
+        font-weight: bold;
+        background: rgba(0, 0, 0, 0.2);
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        color: #ddd;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .shift-tab::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #ff8a00, #ffd700, #ff8a00);
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .shift-tab.active,
+      .shift-tab:hover {
+        color: #fff;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+      }
+
+      .shift-tab.active::before,
+      .shift-tab:hover::before {
+        opacity: 1;
+      }
+
+      .shift-content {
+        display: none;
+      }
+
+      .shift-content.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+      }
+
+      .cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        padding: 28px;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .card-icon {
+        width: 65px;
+        height: 65px;
+        background: linear-gradient(135deg, #ff8a00, #ffd700);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+        font-size: 1.9rem;
+        box-shadow: 0 5px 15px rgba(255, 138, 0, 0.3);
+      }
+
+      .card-title {
+        font-size: 1.85rem;
+        font-weight: bold;
+        color: #ffd700;
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+      }
+
+      .person-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+      }
+
+      .person-card {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .person-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(to right, #4ecdc4, #1a2a6c);
+      }
+
+      .person-card:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-5px);
+      }
+
+      .person-name {
+        font-size: 1.35rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #4ecdc4;
+        text-shadow: 0 0 6px rgba(78, 205, 196, 0.3);
+      }
+
+      .person-position {
+        font-size: 0.95rem;
+        color: #bbb;
+        margin-bottom: 15px;
+      }
+
+      .status-indicator {
+        display: inline-block;
+        padding: 8px 20px;
+        border-radius: 30px;
+        font-weight: bold;
+        border: 2px solid transparent;
+        font-size: 0.95rem;
+      }
+
+      .status-working {
+        background: linear-gradient(to right, #00b09b, #96c93d);
+        color: white;
+        box-shadow: 0 0 8px rgba(0, 176, 155, 0.4);
+      }
+
+      .status-resting {
+        background: linear-gradient(to right, #ff416c, #ff4b2b);
+        color: white;
+        box-shadow: 0 0 8px rgba(255, 65, 108, 0.4);
+      }
+
+      .status-transferred {
+        background: linear-gradient(to right, #ff8a00, #ffd700);
+        color: white;
+        box-shadow: 0 0 8px rgba(255, 138, 0, 0.4);
+      }
+
+      .report-card {
+        background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+        border-radius: 20px;
+        padding: 28px;
+        margin-top: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      .report-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .report-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .report-icon {
+        width: 55px;
+        height: 55px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 18px;
+        font-size: 1.6rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .report-title {
+        font-size: 1.7rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+      }
+
+      .report-content {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 15px;
+        padding: 22px;
+        font-family: "Courier New", monospace;
+        white-space: pre-wrap;
+        line-height: 1.9;
+        font-size: 1.15rem;
+        color: white;
+        text-align: left;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .report-hint {
+        text-align: center;
+        margin-top: 18px;
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-style: italic;
+      }
+
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 18px 28px;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        font-weight: bold;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        z-index: 1000;
+        transform: translateX(150%);
+        transition: transform 0.5s ease;
+        font-size: 1.1rem;
+        border-left: 4px solid #ffd700;
+      }
+
+      .notification.show {
+        transform: translateX(0);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 50px;
+        padding: 25px;
+        color: #aaa;
+        font-size: 0.95rem;
+      }
+
+      .logic-explanation {
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 18px;
+        padding: 25px;
+        margin-top: 35px;
+        border-left: 5px solid #ffd700;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .logic-explanation h3 {
+        color: #ffd700;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.5rem;
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.2);
+      }
+
+      .logic-explanation ul {
+        padding-left: 28px;
+      }
+
+      .logic-explanation li {
+        margin: 15px 0;
+        color: #ddd;
+        line-height: 1.7;
+        font-size: 1.1rem;
+      }
+
+      .logic-explanation li strong {
+        color: #4ecdc4;
+      }
+
+      .logic-explanation li::marker {
+        color: #ffd700;
+        font-size: 1.4em;
+      }
+
+      .system-status {
+        background: rgba(255, 215, 0, 0.12);
+        border-radius: 18px;
+        padding: 20px;
+        margin: 25px 0;
+        border: 1px solid rgba(255, 215, 0, 0.25);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      .system-status h4 {
+        color: #ffd700;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.3rem;
+      }
+
+      .status-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .status-item:last-child {
+        border-bottom: none;
+      }
+
+      .status-label {
+        font-weight: bold;
+        color: #bbb;
+        font-size: 1.1rem;
+      }
+
+      .status-value {
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+
+      .working {
+        color: #96c93d;
+      }
+
+      .resting {
+        color: #ff4b2b;
+      }
+
+      .transfer {
+        color: #ffd700;
+      }
+
+      @media (max-width: 768px) {
+        .cards-container {
+          grid-template-columns: 1fr;
         }
 
-
-        table {
-            width: 1200px;
-            height: 500px;
-            text-align: center;
+        .shift-tabs {
+          flex-direction: column;
+          align-items: center;
         }
 
-        p {
-            text-align: center;
+        .shift-tab {
+          width: 85%;
+          margin-bottom: 12px;
+          padding: 14px;
         }
 
-        div {
-            text-align: center;
+        .person-list {
+          grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
         }
 
         h1 {
-            text-align: center;
-            font-family: serif;
+          font-size: 2.3rem;
         }
+      }
 
-        em {
-            color: #25d0e6;
+      /* 主管卡片特殊样式 */
+      .supervisor-card {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        border: 2px solid rgba(255, 215, 0, 0.6);
+      }
+
+      .supervisor-card .person-name {
+        color: #ffd700;
+        font-size: 1.4rem;
+      }
+
+      .supervisor-card::before {
+        background: linear-gradient(to right, #ffd700, #f9d423);
+      }
+
+      .transfer-card {
+        background: rgba(255, 215, 0, 0.18);
+        border: 2px dashed rgba(255, 215, 0, 0.6);
+      }
+
+      .transfer-card .person-name {
+        color: #ffd700;
+      }
+
+      .transfer-card .person-position::after {
+        content: " (调配)";
+        color: #ff8a00;
+        font-weight: bold;
+      }
+
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        flex-direction: column;
+        color: white;
+        font-size: 1.6rem;
+      }
+
+      .spinner {
+        width: 75px;
+        height: 75px;
+        border: 8px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: #ff9f43;
+        animation: spin 1s linear infinite;
+        margin-bottom: 25px;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
         }
+      }
 
-        .hh {
-            background: #c5f15e;
-        }
-
-        /* 第一行样式 */
-        .one {
-            width: 20px;
-        }
-
-        /* 左上空白 */
-        .k {
-            background: #ffffff;
-        }
-
-        /* 第二列样式 */
-        .jk {
-            background: #c39b9b;
-        }
-
-        /* 星期样式 */
-        .xq {
-            background: #d9e00f;
-        }
-
-        /* 课程样式 */
-        .nr {
-            background: #27f8d5;
-            font-family: monospace;
-        }
-
-        /*  */
-        .sw {
-            background: #e0cece;
-        }
-
-        /*  */
-        .xw {
-            background: #d78f8f;
-        }
-
-        /*  */
-        .ws {
-            background: #cbb6b6;
-        }
-
-        h5 {
-            text-align: center;
-            font-family: monospace;
-            font-weight: lighter;
-        }
-
-        a {
-            text-decoration: none;
-            color: #f40000;
-        }
-
-        /* 设置弹窗样式 */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            color: #0329a7;
-            top: 0;
-            width: 100%;
-            height: 95%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        /* 弹窗图片样式 */
-        .modal-img {
-            display: block;
-            margin: auto;
-            max-width: 80%;
-            max-height: 70%;
-            padding: 20px;
-        }
-
-        /* 关闭按钮样式 */
-        .close {
-            position: absolute;
-            bottom: 1%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #fff;
-            font-size: 28px;
-            font-weight: bold;
-            padding: 50px;
-        }
-
-        .close_img {
-            width: 50px;
-            height: 50px;
-
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #bbb;
-
-            text-decoration: none;
-        }
-
-        .yiyan_text {
-            text-align: right;
-        }
-
-        #yiyan_text,
-        .yiyan_text {
-            font-size: small;
-        }
+      .empty-placeholder {
+        text-align: center;
+        padding: 20px;
+        color: #aaa;
+        font-style: italic;
+        font-size: 1.1rem;
+      }
     </style>
-</head>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1><i class="fas fa-user-clock"></i> 在岗人员管理系统</h1>
+        <p>智能化岗位偷懒系统</p>
+      </header>
 
-<body>
-    <!-- 弹窗  -->
-    <!-- <div id="myModal" class="modal">
-        <span id="closeBtn" class="close"><img class="close_img"
-                src="https://xiang.4everland.app/img/tuichu.png"></span>
-        <img class="modal-img" src="https://xiang.4everland.app/img/yby.jpg">
-    </div> -->
+      <div class="manager-info">
+        <h3><i class="fas fa-user-tie"></i> 当前负责人</h3>
+        <div class="manager-name">张炫</div>
+      </div>
+
+      <div class="loading-overlay" id="loading">
+        <div class="spinner"></div>
+        <p>正在加载人员数据...</p>
+      </div>
+
+      <div class="shift-tabs">
+        <button class="shift-tab active" data-shift="day">白班人员</button>
+        <button class="shift-tab" data-shift="night">晚班人员</button>
+      </div>
+
+      <div class="shift-content active" id="day-shift">
+        <div class="cards-container">
+          <!-- 主管/队长卡片 -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-user-tie"></i>
+              </div>
+              <div class="card-title">主管/队长</div>
+            </div>
+            <div class="person-list" id="day-supervisor-list">
+              <!-- 白班主管/队长人员 -->
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-walking"></i>
+              </div>
+              <div class="card-title">巡逻岗</div>
+            </div>
+            <div class="person-list" id="day-patrol-list">
+              <!-- 白班巡逻岗人员 -->
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-door-open"></i>
+              </div>
+              <div class="card-title">门岗</div>
+            </div>
+            <div class="person-list" id="day-gate-list">
+              <!-- 白班门岗人员 -->
+            </div>
+          </div>
+        </div>
+
+        <div class="report-card" id="day-report">
+          <div class="report-header">
+            <div class="report-icon">
+              <i class="fas fa-clipboard-list"></i>
+            </div>
+            <div class="report-title">工作汇报（白班）</div>
+          </div>
+          <div class="report-content" id="day-report-content">
+            <!-- 白班工作汇报内容 -->
+          </div>
+          <div class="report-hint">点击卡片复制工作汇报内容</div>
+        </div>
+      </div>
+
+      <div class="shift-content" id="night-shift">
+        <div class="cards-container">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-walking"></i>
+              </div>
+              <div class="card-title">巡逻岗</div>
+            </div>
+            <div class="person-list" id="night-patrol-list">
+              <!-- 晚班巡逻岗人员 -->
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-door-open"></i>
+              </div>
+              <div class="card-title">门岗</div>
+            </div>
+            <div class="person-list" id="night-gate-list">
+              <!-- 晚班门岗人员 -->
+            </div>
+          </div>
+        </div>
+
+        <div class="report-card" id="night-report">
+          <div class="report-header">
+            <div class="report-icon">
+              <i class="fas fa-clipboard-list"></i>
+            </div>
+            <div class="report-title">工作汇报（晚班）</div>
+          </div>
+          <div class="report-content" id="night-report-content">
+            <!-- 晚班工作汇报内容 -->
+          </div>
+          <div class="report-hint">点击卡片复制工作汇报内容</div>
+        </div>
+      </div>
+
+      <div class="notification" id="notification">状态已更新</div>
+    </div>
+
+    <footer>
+      <p>在岗人员管理系统 &copy; 2025 | 金华申通项目 | 智能调配系统 v3.0</p>
+    </footer>
+
     <script>
-        window.onload = function () {
-            // 显示弹窗
-            document.getElementById("myModal").style.display = "block";
-        };
-        // 当用户点击关闭按钮时，隐藏弹窗
-        document.getElementById("closeBtn").addEventListener("click", function () {
-            document.getElementById("myModal").style.display = "none";
+      // 全局变量
+      let personnelData = [];
+      let personnelStatus;
+
+      // DOM 加载完成后初始化
+      document.addEventListener("DOMContentLoaded", function () {
+        fetchPersonnelData();
+      });
+
+      // 获取人员数据
+      async function fetchPersonnelData() {
+        const loadingOverlay = document.getElementById("loading");
+
+        try {
+          // 模拟API请求延迟
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          const url =
+            "https://gitee.com/api/v5/repos/xiang-520/sto/contents/gate_sentry/gate_sentry.json?access_token=7f8823412c1b2262f256ee292d7d6fa2";
+
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(
+              `网络请求失败: ${response.status} ${response.statusText}`
+            );
+          }
+
+          const data = await response.json();
+
+          // 解码Base64内容
+          const base64Content = data.content;
+          const chineseText = base64ToUtf8(base64Content);
+
+          // 安全解析JSON
+          personnelData = JSON.parse(chineseText);
+          console.log("人员数据加载成功:", personnelData);
+
+          // 初始化应用
+          initApp();
+        } catch (error) {
+          console.error("获取人员数据失败:", error);
+          showNotification("数据加载失败，使用默认数据");
+
+          // 使用默认数据初始化应用
+          personnelData = [];
+          initApp();
+        } finally {
+          // 确保总是隐藏加载动画
+          if (loadingOverlay) {
+            loadingOverlay.style.display = "none";
+          }
+        }
+      }
+
+      // Base64转UTF-8函数
+      function base64ToUtf8(base64Str) {
+        try {
+          // 移除可能的Base64填充字符
+          const base64WithoutPadding = base64Str.replace(/=+$/, "");
+
+          // 解码Base64
+          const binaryStr = atob(base64WithoutPadding);
+
+          // 将二进制字符串转换为UTF-8
+          const bytes = new Uint8Array(binaryStr.length);
+          for (let i = 0; i < binaryStr.length; i++) {
+            bytes[i] = binaryStr.charCodeAt(i);
+          }
+
+          // 使用TextDecoder处理UTF-8编码
+          return new TextDecoder("utf-8").decode(bytes);
+        } catch (e) {
+          console.error("Base64解码失败:", e);
+          throw new Error("Base64解码失败: " + e.message);
+        }
+      }
+      // 初始化应用
+      function initApp() {
+        // 构建状态对象
+        buildPersonnelStatus();
+
+        // 初始化标签页切换
+        document.querySelectorAll(".shift-tab").forEach((tab) => {
+          tab.addEventListener("click", function () {
+            // 移除所有活动标签
+            document
+              .querySelectorAll(".shift-tab")
+              .forEach((t) => t.classList.remove("active"));
+            // 隐藏所有班次内容
+            document
+              .querySelectorAll(".shift-content")
+              .forEach((c) => c.classList.remove("active"));
+
+            // 激活当前标签
+            this.classList.add("active");
+            // 显示对应内容
+            const shift = this.getAttribute("data-shift");
+            document.getElementById(`${shift}-shift`).classList.add("active");
+
+            // 更新工作汇报
+            updateReport(shift);
+          });
         });
+
+        // 初始化工作汇报卡片点击事件
+        document
+          .getElementById("day-report")
+          .addEventListener("click", () => copyReport("day"));
+        document
+          .getElementById("night-report")
+          .addEventListener("click", () => copyReport("night"));
+
+        // 渲染所有人员
+        renderAllPersonnel();
+        // 初始化工作汇报
+        updateReport("day");
+      }
+
+      // 构建人员状态对象
+      function buildPersonnelStatus() {
+        // 动态构建状态对象
+        personnelStatus = {
+          day: {
+            supervisor: {},
+            patro: {},
+            gate: {},
+          },
+          night: {
+            patro: {},
+            gate: {},
+          },
+          noonPatro: {},
+        };
+
+        // 处理经理（固定分配到 day.supervisor）
+        personnelStatus.day.supervisor[personnelData.manager] = "working";
+
+        // 处理巡逻人员
+        Object.entries(personnelData.patro).forEach(([shift, name]) => {
+          if (shift === "daytime") {
+            personnelStatus.day.patro[name] = "working";
+          } else if (shift === "night") {
+            personnelStatus.night.patro[name] = "working";
+          } else if (shift === "noon") {
+            personnelStatus.noonPatro[name] = "working";
+          }
+        });
+
+        // 处理门岗人员
+        Object.entries(personnelData.gate_sentry).forEach(([shift, names]) => {
+          names.forEach((name) => {
+            if (shift === "daytime") {
+              personnelStatus.day.gate[name] = "working";
+            } else if (shift === "night") {
+              personnelStatus.night.gate[name] = "working";
+            }
+          });
+        });
+      }
+
+      // 渲染所有人员
+      function renderAllPersonnel() {
+        renderShiftPersonnel("day");
+        renderShiftPersonnel("night");
+      }
+
+      // 渲染指定班次人员
+      function renderShiftPersonnel(shift) {
+        if (shift === "day") {
+          // 渲染主管/队长
+          const supervisorList = document.getElementById("day-supervisor-list");
+          supervisorList.innerHTML = "";
+
+          Object.keys(personnelStatus.day.supervisor).forEach((name) => {
+            const status = personnelStatus.day.supervisor[name];
+            const card = createPersonCard(
+              name,
+              "主管/队长",
+              status,
+              () => toggleStatus("day", "supervisor", name),
+              true
+            );
+            supervisorList.appendChild(card);
+          });
+
+          // 渲染巡逻岗
+          const patrolList = document.getElementById("day-patrol-list");
+          patrolList.innerHTML = "";
+
+          Object.keys(personnelStatus.day.patro).forEach((name) => {
+            const status = personnelStatus.day.patro[name];
+            const card = createPersonCard(name, "巡逻岗", status, () =>
+              toggleStatus("day", "patro", name)
+            );
+            patrolList.appendChild(card);
+          });
+        } else {
+          // 渲染巡逻岗（晚班）
+          const patrolList = document.getElementById("night-patrol-list");
+          patrolList.innerHTML = "";
+
+          Object.keys(personnelStatus.night.patro).forEach((name) => {
+            const status = personnelStatus.night.patro[name];
+            const card = createPersonCard(name, "巡逻岗", status, () =>
+              toggleStatus("night", "patro", name)
+            );
+            patrolList.appendChild(card);
+          });
+        }
+
+        // 渲染门岗
+        const gateList = document.getElementById(`${shift}-gate-list`);
+        gateList.innerHTML = "";
+
+        // 检查门岗休息人数
+        const restingCount = Object.values(personnelStatus[shift].gate).filter(
+          (s) => s === "resting"
+        ).length;
+
+        // 获取当班巡逻岗和中班巡逻岗信息
+        const currentPatroName =
+          shift === "day"
+            ? personnelData.patro.daytime
+            : personnelData.patro.night;
+        const noonPatroName = personnelData.patro.noon;
+        const currentPatroStatus =
+          personnelStatus[shift].patro[currentPatroName];
+        const noonPatroStatus = personnelStatus.noonPatro[noonPatroName];
+
+        // 自动调配逻辑
+        const adjustments = [];
+
+        // 规则1: 门岗1人休息 → 当班巡逻岗顶替
+        if (restingCount === 1) {
+          if (currentPatroStatus === "working") {
+            adjustments.push({
+              name: currentPatroName,
+              type: "patro",
+              position: "门岗",
+            });
+          }
+          // 规则3: 当班巡逻岗休息且门岗有人休息 → 中班巡逻岗顶替
+          else if (noonPatroStatus === "working") {
+            adjustments.push({
+              name: noonPatroName,
+              type: "noonPatro",
+              position: "门岗",
+            });
+          }
+        }
+        // 规则2: 门岗2人休息 → 当班巡逻岗和中班巡逻岗一起顶替
+        else if (restingCount >= 2) {
+          if (currentPatroStatus === "working") {
+            adjustments.push({
+              name: currentPatroName,
+              type: "patro",
+              position: "门岗",
+            });
+          }
+          if (noonPatroStatus === "working") {
+            adjustments.push({
+              name: noonPatroName,
+              type: "noonPatro",
+              position: "门岗",
+            });
+          }
+        }
+
+        // 渲染原始门岗人员
+        Object.keys(personnelStatus[shift].gate).forEach((name) => {
+          const status = personnelStatus[shift].gate[name];
+          const card = createPersonCard(name, "门岗", status, () =>
+            toggleStatus(shift, "gate", name)
+          );
+          gateList.appendChild(card);
+        });
+
+        // 添加调配人员
+        adjustments.forEach((adjust) => {
+          const card = createPersonCard(
+            adjust.name,
+            adjust.position,
+            "working",
+            null,
+            false,
+            true
+          );
+          gateList.appendChild(card);
+        });
+
+        // 更新巡逻岗显示 - 如果巡逻岗被调配，则显示"无"
+        if (shift === "day") {
+          const patrolList = document.getElementById("day-patrol-list");
+          // 检查巡逻岗是否为空
+          if (patrolList.children.length === 0) {
+            const placeholder = document.createElement("div");
+            placeholder.className = "empty-placeholder";
+            placeholder.textContent = "当前无巡逻岗人员";
+            patrolList.appendChild(placeholder);
+          }
+        } else {
+          const patrolList = document.getElementById("night-patrol-list");
+          if (patrolList.children.length === 0) {
+            const placeholder = document.createElement("div");
+            placeholder.className = "empty-placeholder";
+            placeholder.textContent = "当前无巡逻岗人员";
+            patrolList.appendChild(placeholder);
+          }
+        }
+
+        // 更新工作汇报
+        updateReport(shift);
+      }
+
+      // 创建人员卡片
+      function createPersonCard(
+        name,
+        position,
+        status,
+        clickHandler,
+        isSupervisor = false,
+        isTransfer = false
+      ) {
+        const card = document.createElement("div");
+
+        if (isSupervisor) {
+          card.className = "person-card supervisor-card";
+        } else if (isTransfer) {
+          card.className = "person-card transfer-card";
+        } else {
+          card.className = "person-card";
+        }
+
+        let statusText = "在岗";
+        let statusClass = "status-working";
+
+        if (status === "resting") {
+          statusText = "休息";
+          statusClass = "status-resting";
+        } else if (isTransfer) {
+          statusText = "在岗";
+          statusClass = "status-transferred";
+        }
+
+        card.innerHTML = `
+        <div class="person-name">${name}</div>
+        <div class="person-position">${position}${isTransfer ? " " : ""}</div>
+        <div class="status-indicator ${statusClass}">
+          ${statusText}
+        </div>
+      `;
+
+        if (clickHandler) {
+          card.addEventListener("click", clickHandler);
+        }
+
+        return card;
+      }
+
+      // 切换状态
+      function toggleStatus(shift, type, name) {
+        // 更新状态
+        const currentStatus = personnelStatus[shift][type][name];
+        personnelStatus[shift][type][name] =
+          currentStatus === "working" ? "resting" : "working";
+
+        // 重新渲染
+        renderShiftPersonnel(shift);
+
+        // 显示通知
+        showNotification(
+          `${name} 状态已更新：${currentStatus === "working" ? "休息" : "在岗"}`
+        );
+      }
+
+      // 更新工作汇报
+      function updateReport(shift) {
+        const reportContent = generateReport(shift);
+        document.getElementById(`${shift}-report-content`).textContent =
+          reportContent;
+      }
+
+      // 生成工作汇报内容
+      function generateReport(shift) {
+        const today = new Date();
+        const reportDate =
+          shift === "day"
+            ? `${today.getFullYear()}年${
+                today.getMonth() + 1
+              }月${today.getDate()}日`
+            : `${today.getFullYear()}年${today.getMonth() + 1}月${
+                today.getDate() - 1
+              }日`;
+
+        const shiftName = shift === "day" ? "白班" : "晚班";
+
+        // 计算门岗休息人数
+        const gateRestingCount = Object.values(
+          personnelStatus[shift].gate
+        ).filter((s) => s === "resting").length;
+
+        // 计算巡逻岗在岗人员
+        const patrolOnDuty = Object.keys(personnelStatus[shift].patro).filter(
+          (name) => personnelStatus[shift].patro[name] === "working"
+        );
+
+        // 计算门岗在岗人员
+        const gateOnDuty = Object.keys(personnelStatus[shift].gate).filter(
+          (name) => personnelStatus[shift].gate[name] === "working"
+        );
+
+        // 获取当班巡逻岗和中班巡逻岗信息
+        const currentPatroName =
+          shift === "day"
+            ? personnelData.patro.daytime
+            : personnelData.patro.night;
+        const noonPatroName = personnelData.patro.noon;
+        const currentPatroStatus =
+          personnelStatus[shift].patro[currentPatroName];
+        const noonPatroStatus = personnelStatus.noonPatro[noonPatroName];
+
+        // 自动调配逻辑 - 与渲染逻辑一致
+        const transferred = [];
+
+        // 规则1: 门岗1人休息 → 当班巡逻岗顶替
+        if (gateRestingCount === 1) {
+          if (currentPatroStatus === "working") {
+            transferred.push(currentPatroName);
+          }
+          // 规则3: 当班巡逻岗休息且门岗有人休息 → 中班巡逻岗顶替
+          else if (noonPatroStatus === "working") {
+            transferred.push(noonPatroName);
+          }
+        }
+        // 规则2: 门岗2人休息 → 当班巡逻岗和中班巡逻岗一起顶替
+        else if (gateRestingCount >= 2) {
+          if (currentPatroStatus === "working") {
+            transferred.push(currentPatroName);
+          }
+          if (noonPatroStatus === "working") {
+            transferred.push(noonPatroName);
+          }
+        }
+
+        // 最终门岗人员 = 原始门岗在岗人员 + 调配人员
+        const finalGate = [...gateOnDuty, ...transferred];
+
+        // 实际巡逻岗：未被调配的巡逻岗在岗人员
+        const actualPatrolOnDuty = patrolOnDuty.filter(
+          (name) => !transferred.includes(name)
+        );
+
+        // 计算主管状态
+        let supervisorStatus = "在岗";
+        if (shift === "day") {
+          supervisorStatus =
+            personnelStatus.day.supervisor[personnelData.manager] === "working"
+              ? "在岗"
+              : "休息";
+        }
+
+        // 计算实际出勤人数
+        let workingCount = finalGate.length + actualPatrolOnDuty.length;
+        if (shift === "day") {
+          if (
+            personnelStatus.day.supervisor[personnelData.manager] === "working"
+          )
+            workingCount++;
+        }
+
+        // 应出勤人数
+        const totalPersonnel =
+          shift === "day"
+            ? Object.keys(personnelStatus.day.supervisor).length +
+              Object.keys(personnelStatus.day.patro).length +
+              Object.keys(personnelStatus.day.gate).length
+            : Object.keys(personnelStatus.night.patro).length +
+              Object.keys(personnelStatus.night.gate).length;
+
+        // 休息人数
+        const restingCount = totalPersonnel - workingCount;
+
+        if (shift === "day") {
+          return `项目名称：金华申通
+汇报日期：${reportDate}
+汇报班次：白班
+汇报人：${personnelData.manager}
+应出勤： ${totalPersonnel}人
+实际出勤： ${workingCount}人
+休息：${restingCount}人
+主管/队长：${personnelData.manager}
+门岗：${finalGate.join("、")}
+巡逻：${actualPatrolOnDuty.length > 0 ? actualPatrolOnDuty.join("、") : "无"}`;
+        } else {
+          return `项目名称：金华申通
+汇报日期：${reportDate}
+汇报班次：晚班
+汇报人：${personnelData.manager}
+应出勤： ${totalPersonnel}人
+实际出勤： ${workingCount}人
+休息：${restingCount}人
+门岗：${finalGate.join("、")}
+消控/巡逻：${
+            actualPatrolOnDuty.length > 0 ? actualPatrolOnDuty.join("、") : "无"
+          }`;
+        }
+      }
+
+      // 复制工作汇报
+      function copyReport(shift) {
+        const reportContent = generateReport(shift);
+        navigator.clipboard
+          .writeText(reportContent)
+          .then(() => {
+            showNotification("工作汇报已复制到剪贴板");
+          })
+          .catch((err) => {
+            console.error("复制失败:", err);
+            showNotification("复制失败，请手动复制内容");
+          });
+      }
+
+      // 显示通知
+      function showNotification(message) {
+        const notification = document.getElementById("notification");
+        notification.textContent = message;
+        notification.classList.add("show");
+
+        setTimeout(() => {
+          notification.classList.remove("show");
+        }, 3000);
+      }
     </script>
-
-
-
-
-
-
-    <table align="cent0
-    .er">
-        <tr>
-            <!-- 第几周 -->
-            <h1>应用化工技术<em>第 十八 周</em>课表</h1>
-            <!-- 加载 -->
-
-            <h5>
-                <a href="http://www.jzlg.cn/" target="_blank">学校官网主页</a> /
-                <a href="http://218.200.73.44/st/login.aspx" target="_blank">学生登录平台</a> /
-                <a href="https://xiang.4everland.app/" target="_blank">主页</a>
-            </h5>
-            <div id="times"></div>
-            <script>
-                var times = document.getElementById("times");
-                function sz() {
-                    t = setInterval(function () {
-                        //获取时间对象
-                        var dd = new Date();
-                        //获取年月日，时分秒
-                        var y = dd.getFullYear();
-                        var m = dd.getMonth() + 1;
-                        var d = dd.getDate();
-                        var h = dd.getHours();
-                        var i = dd.getMinutes();
-                        var s = dd.getSeconds();
-                        var wkday = dd.getDay();
-                        times.innerHTML =
-                            y +
-                            "年" +
-                            m +
-                            "月" +
-                            d +
-                            "日" +
-                            "   " +
-                            h +
-                            ":" +
-                            i +
-                            ":" +
-                            s +
-                            " " +
-                            "星期" +
-                            "日一二三四五六".charAt(wkday);
-                    }, 1000);
-                }
-                sz();
-            </script>
-        </tr>
-        <tr class="one">
-            <td class="k">
-
-            </td>
-            <td class="hh">节课 / 星期</td>
-            <td class="xq">星期一</td>
-            <td class="xq">星期二</td>
-            <td class="xq">星期三</td>
-            <td class="xq">星期四</td>
-            <td class="xq">星期五</td>
-            <td class="xq">星期六</td>
-            <td class="xq">星期天</td>
-        </tr>
-
-        <tr>
-            <!-- 上午一二节课 -->
-            <td class="sw">上</td>
-            <td class="jk">1-2</td>
-            <!-- 星期一 -->
-            <td class="nr" id="Monday_1">
-
-            </td>
-            <!-- 星期二 -->
-            <td class="nr" id="Tuesday_1">
-                数学<br />道之楼(科教大楼)<br />506
-            </td>
-            <!-- 星期三 -->
-            <td class="nr" id="Wednesday_1">
-
-            </td>
-            <!-- 星期四 -->
-            <td class="nr" id="Thursday_1">
-                分析化学实验<br />道之楼(科教大楼)<br />503
-            </td>
-            <!-- 星期五 -->
-            <td class="nr" id="Friday_1">
-
-            </td>
-            <!-- 星期六 -->
-            <td class="nr" id="Saturday_1">
-
-            </td>
-            <!-- 星期天 -->
-            <td class="nr" id="Sunday_1">
-
-            </td>
-        </tr>
-
-        <tr>
-            <!-- 上午三四节课 -->
-            <td class="sw">午</td>
-            <td class="jk">3-4</td>
-            <!-- 星期一 -->
-            <td class="nr" id="Monday_2">
-
-
-            </td>
-            <!-- 星期二 -->
-            <td class="nr" id="Tuesday_2">
-                有机化学<br>道之楼(科教大楼)501
-
-            </td>
-            <!-- 星期三 -->
-            <td class="nr" id="Wednesday_2">
-
-            </td>
-            <!-- 星期四 -->
-            <td class="nr" id="">
-                化工制图 <br> 道之楼(科教大楼) <br> 502
-            </td>
-            <!-- 星期五 -->
-            <td class="nr" id="Friday_2"></td>
-            <!-- 星期六 -->
-            <td class="nr" id="Saturday_2">
-
-            </td>
-            <!-- 星期天 -->
-            <td class="nr" id="Sunday_2">
-
-            </td>
-        </tr>
-
-        <!-- 下午五六节课 -->
-        <tr>
-            <td class="xw">下</td>
-            <td class="jk">5-6</td>
-            <!-- 星期一 -->
-            <td class="nr" id="Monday_3">
-
-            </td>
-            <!-- 星期二 -->
-            <td class="nr" id="Tuesday_3">
-
-            </td>
-            <!-- 星期三 -->
-            <td class="nr" id="Wednesday_3">
-
-            </td>
-            <!-- 星期四 -->
-            <td class="nr" id="Thursday_3">
-
-            </td>
-            <!-- 星期五 -->
-            <td class="nr" id="Friday_3">
-
-            </td>
-            <!-- 星期六 -->
-            <td class="nr" id="Saturday_3">
-
-
-            </td>
-            <!-- 星期天 -->
-            <td class="nr" id="Sunday_3">
-
-            </td>
-        </tr>
-
-        <tr>
-            <!-- 下午七八节课 -->
-            <td class="xw">午</td>
-            <td class="jk">7-8</td>
-            <!-- 星期一 -->
-            <td class="nr" id="Monday_4">
-
-            </td>
-            <!-- 星期二 -->
-            <td class="nr" id="Tuesday_4">
-
-            </td>
-            <!-- 星期三 -->
-            <td class="nr" id="Wednesday_4">
-
-
-            </td>
-            <!-- 星期四 -->
-            <td class="nr" id="Thursday_4">
-
-            </td>
-            <!-- 星期五 -->
-            <td class="nr" id="Friday_4">
-
-            </td>
-            <!-- 星期六 -->
-            <td class="nr" id="Saturday_4">
-
-            </td>
-            <!-- 星期天 -->
-            <td class="nr" id="Sunday_4"></td>
-        </tr>
-
-        <tr>
-            <!-- 晚自习 -->
-            <td class="ws">晚上</td>
-            <td class="jk">9-10</td>
-            <!-- 星期一 -->
-            <td class="nr" id="Monday_5">
-
-            </td>
-            <!-- 星期二 -->
-            <td class="nr" id="Tuesday_5">
-
-            </td>
-            <!-- 星期三 -->
-            <td class="nr" id="Wednesday_5">
-
-            </td>
-            <!-- 星期四 -->
-            <td class="nr" id="Thursday_5">
-
-            </td>
-            <!-- 星期五 -->
-            <td class="nr" id="Friday_5"></td>
-            <!-- 星期六 -->
-            <td class="nr" id="Saturday_5"></td>
-            <!-- 星期天 -->
-            <td class="nr" id="Sunday_5"></td>
-        </tr>
-    </table>
-
-</body>
-
+  </body>
 </html>
