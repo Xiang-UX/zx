@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>在岗人员管理系统</title>
+    <title>在岗人员管理系统 - 金华申通</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -27,6 +27,54 @@
       .container {
         max-width: 1200px;
         margin: 0 auto;
+      }
+
+      /* 顶部导航栏样式 */
+      .top-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        margin-bottom: 20px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      .nav-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        background: linear-gradient(to right, #ffd700, #f9d423);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .nav-button {
+        background: linear-gradient(135deg, #ff8a00, #ffd700);
+        color: #1a2a6c;
+        border: none;
+        border-radius: 50px;
+        padding: 12px 25px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 4px 15px rgba(255, 138, 0, 0.4);
+      }
+
+      .nav-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(255, 138, 0, 0.6);
+      }
+
+      .nav-button:active {
+        transform: translateY(1px);
       }
 
       header {
@@ -479,6 +527,22 @@
         h1 {
           font-size: 2rem;
         }
+
+        .top-nav {
+          flex-direction: column;
+          gap: 15px;
+          padding: 15px;
+        }
+
+        .nav-title {
+          font-size: 1.5rem;
+          text-align: center;
+        }
+
+        .nav-button {
+          width: 100%;
+          justify-content: center;
+        }
       }
 
       /* 主管卡片特殊样式 */
@@ -554,9 +618,17 @@
   </head>
   <body>
     <div class="container">
+      <!-- 顶部导航栏 -->
+      <div class="top-nav">
+       
+        <button class="nav-button" id="history-btn">
+          <i class="fas fa-history"></i> 修改
+        </button>
+      </div>
+
       <header>
         <h1><i class="fas fa-user-clock"></i> 在岗人员管理系统</h1>
-        <p>智能化岗位调配系统</p>
+
       </header>
 
       <div class="manager-info">
@@ -683,6 +755,14 @@
 
       // DOM 加载完成后初始化
       document.addEventListener("DOMContentLoaded", function () {
+        // 添加历史按钮事件监听
+        document
+          .getElementById("history-btn")
+          .addEventListener("click", function () {
+            // 这里替换为您要跳转的实际URL
+            window.location.href = "./修改.html";
+          });
+
         fetchPersonnelData();
       });
 
@@ -692,7 +772,7 @@
 
         try {
           // 模拟API请求延迟
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          await new Promise((resolve) => setTimeout(resolve, 200));
           const url =
             "https://gitee.com/api/v5/repos/xiang-520/sto/contents/gate_sentry/gate_sentry.json?access_token=7f8823412c1b2262f256ee292d7d6fa2";
 
@@ -719,8 +799,6 @@
           console.error("获取人员数据失败:", error);
           showNotification("数据加载失败，使用默认数据");
 
-          // 使用默认数据初始化应用
-          personnelData = [];
           initApp();
         } finally {
           // 确保总是隐藏加载动画
